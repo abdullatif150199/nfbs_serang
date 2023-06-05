@@ -21,7 +21,7 @@ class Table extends DataTableComponent
         return [
             Column::make('Gambar')
                 ->format(function ($value, $column, $row) {
-                    return '<img src="' . $row->image_thumb_url . '" class="h-auto w-28 rounded" />';
+                    return '<img src="' .$row->image_thumb_url. '" class="h-auto w-28 rounded" />';
                 })->asHtml(),
             Column::make('Judul', 'title')
                 ->sortable()

@@ -14,7 +14,7 @@
             </h2>
         </div>
         <div
-            class="mt-12 max-w-lg mx-auto grid gap-5 md:gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:max-w-none lg:max-w-none">
+            class="mt-11 max-w-lg mx-auto grid gap-5 md:gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:max-w-none lg:max-w-none">
             @foreach ($posts as $post)
             <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
                 <div class="flex-shrink-0">

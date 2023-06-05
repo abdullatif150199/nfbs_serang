@@ -1,8 +1,8 @@
 <x-dash-layout>
-    <div class="pt-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="flex-1 text-2xl font-bold text-gray-900">Posts</h1>
+<div class="pt-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="flex-1 text-2xl font-bold text-gray-900">Sebaran Alumni</h1>
         <!-- Stat -->
-        <livewire:dash.posts.stat />
+        <!-- <livewire:dash.posts.stat /> -->
 
         <!-- Table -->
         <div class="-mx-4 my-10 shadow bg-white sm:-mx-6 md:mx-0 md:rounded-lg">

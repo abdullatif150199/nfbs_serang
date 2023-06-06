@@ -35,6 +35,7 @@ Route::name('dash.')
         Route::get('/users/{id}/user-page', [UserController::class, 'userPage'])->name('users.user-page');
         Route::get('/', [WebsiteController::class, 'index'])->name('index');
         Route::get('/{item}', [WebsiteController::class, 'views'])->name('views');
+        Route::get('/{item}/{id}', [WebsiteController::class, 'show'])->name('show');
         Route::get('/{item}/create', [WebsiteController::class, 'create'])->name('create');
         Route::get('/{item}/{id}/edit', [WebsiteController::class, 'edit'])->name('edit');
     });

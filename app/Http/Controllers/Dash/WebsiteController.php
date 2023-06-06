@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dash;
 
 use App\Http\Controllers\Controller;
+use App\Models\Angkatan;
 
 class WebsiteController extends Controller
 {
@@ -20,7 +21,8 @@ class WebsiteController extends Controller
             'fasilitas',
             'about-us',
             'menu',
-            'alumni'
+            'alumni',
+            'alumni-show'
         ];
     }
 
@@ -62,6 +64,18 @@ class WebsiteController extends Controller
         return view("dash.website.{$item}-form", [
             'postId' => $id,
             'title' => ucfirst($item)
+        ]);
+    }
+
+    public function show ($item, $id) 
+    {
+        if (!in_array($item, $this->items)) {
+            return abort(404);
+        }
+
+        return view("dash.website.{$item}-index", [
+            'item' => $item,
+            'id' => $id
         ]);
     }
 

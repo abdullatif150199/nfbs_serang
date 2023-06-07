@@ -73,9 +73,12 @@ class WebsiteController extends Controller
             return abort(404);
         }
 
+        $angkatan = Angkatan::where('id', $id)->first();
         return view("dash.website.{$item}-index", [
             'item' => $item,
-            'id' => $id
+            'id' => $id,
+            'angkatan' => $angkatan
+
         ]);
     }
 

@@ -19,23 +19,21 @@ class Table extends DataTableComponent
         public function columns(): array
         {
             return [
-                Column::make('angkatan', 'angkatan')
+                Column::make('angkatan','tahun_lulus', 'angkatan')
                     ->sortable()
                     ->searchable()
                     ->format(function ($value, $column, $row) {
-                        return "Angkatan " . $row->angkatan . " (" . $row->tahun_lulus . ")"; 
+                        return "Angkatan " . $row->angkatan . " ( " . $row->tahun_lulus . " ) "; 
                     })->asHtml(),
         
-                Column::make('jumlah', 'title')
+                Column::make('jumlah', 'jumlah')
                     ->sortable()
-                    ->searchable()
                     ->format(function ($value, $column, $row) {
                         $alumniCount = $row->alumni->count();
                         return $alumniCount . " Siswa";
                     })->asHtml(),
                 Column::make('Action')
                     ->sortable()
-                    ->searchable()
                     ->format(function ($value, $column, $row) {
                         $alumni = $row->alumni;
                         return view('livewire.dash.alumni._actions', [

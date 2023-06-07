@@ -1,11 +1,11 @@
 <x-dash-layout>
 <div class="pt-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="flex-1 text-2xl font-bold text-gray-900">Sebaran Alumni {{$id}}</h1>
+        <h1 class="flex-1 text-2xl font-bold text-gray-900">Sebaran Alumni</h1>
         <div class="-mx-4 my-10 shadow bg-white sm:-mx-6 md:mx-0 md:rounded-lg">
             <div class="divide-y">
                 <div class="flex items-center justify-between px-4 py-4">
                     <div class="text-md font-medium uppercase text-gray-700">
-                        Daftar Angkatan
+                        Angkatan {{ $angkatan->angkatan }} ( {{ $angkatan->tahun_lulus }} )
                     </div>
                     <div class="space-x-1">
 

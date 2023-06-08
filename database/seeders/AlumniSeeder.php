@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Arr;
 
 class AlumniSeeder extends Seeder
 {
@@ -18,22 +19,23 @@ class AlumniSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        // Mendapatkan angkatan_id yang ada dalam tabel angkatans
-        $angkatanIds = DB::table('angkatans')->pluck('id');
+           $jumlahAlumni = 150;
 
-        foreach ($angkatanIds as $angkatanId) {
-           $jumlahAlumni = 100;
+        
+
+            $namaKampus = ['ITB', 'UGM', 'UNTIRTA', 'UNPAD', 'UI', 'TELKOM UNIVERSTY', 'BINUS'];
 
             for ($i = 0; $i < $jumlahAlumni; $i++) {
                 DB::table('alumnis')->insert([
-                    'angkatan_id' => $angkatanId,
                     'nama' => $faker->name,
-                    'program_studi' => $faker->randomElement(['Teknik Informatika', 'Akuntansi', 'Hukum']),
-                    'perguruan_tinggi' => $faker->company,
+                    'jurusan' => $faker->randomElement(['Teknik Informatika', 'Akuntansi', 'Hukum']),
+                    'nama_kampus' => Arr::random($namaKampus),
+                    'letak_kampus' => $faker->randomElement(['Luar Negeri', 'Dalam Negeri']),
+                    'kampus_milik' => $faker->randomElement(['Negeri', 'Swasta']),
+                    'tahun_lulus' => $faker->randomElement(['2020', '2021', '2022']),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
             }
-        }
     }
 }

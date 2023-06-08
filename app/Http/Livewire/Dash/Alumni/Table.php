@@ -19,26 +19,36 @@ class Table extends DataTableComponent
         public function columns(): array
         {
             return [
-                Column::make('angkatan','tahun_lulus', 'angkatan')
+                Column::make('nama','nama')
                     ->sortable()
                     ->searchable()
                     ->format(function ($value, $column, $row) {
-                        return "Angkatan " . $row->angkatan . " ( " . $row->tahun_lulus . " ) "; 
+                        return $row->nama; 
                     })->asHtml(),
         
-                Column::make('jumlah', 'jumlah')
+                Column::make('jurusan', 'jurusan')
+                    ->searchable()
                     ->sortable()
                     ->format(function ($value, $column, $row) {
-                        $alumniCount = $row->alumni->count();
-                        return $alumniCount . " Siswa";
+                        return $row->jurusan;
                     })->asHtml(),
+                Column::make('nama kampus', 'nama_kampus')
+                    ->searchable()
+                    ->sortable()
+                    ->format(function ($value, $column, $row) {
+                        return $row->nama_kampus;
+                    })->asHtml(),
+                Column::make('tahun lulus', 'tahun_lulus')
+                    ->searchable()
+                    ->sortable()
+                    ->format(function ($value, $column, $row) {
+                        return $row->tahun_lulus;
+                })->asHtml(),
                 Column::make('Action')
                     ->sortable()
                     ->format(function ($value, $column, $row) {
-                        $alumni = $row->alumni;
                         return view('livewire.dash.alumni._actions', [
                             'data' => $row,
-                            'alumni' => $alumni
                         ]);
                     })->asHtml(),
             ];
@@ -46,17 +56,12 @@ class Table extends DataTableComponent
     
         public function query(): Builder
         {
-            return Angkatan::query()
-                ->with('alumni')
-                ->latest();
+            return Alumni::query()->latest();
         }
 
 
 
-    // public function render()
-    // {
-    //     return view('livewire.dash.alumni.table');
-    // }
+
 
     
 }

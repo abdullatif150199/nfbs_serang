@@ -10,7 +10,7 @@
                     </div>
                     <div class="space-x-1">
 
-                        <a href="{{ route('dash.create', 'posts') }}"
+                        <a href="{{ route('dash.create', 'alumni') }}"
                             class="inline-flex items-center pl-3 pr-4 py-2 text-xs
                                                     font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none
                                                     focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">

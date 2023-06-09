@@ -21,8 +21,7 @@ class WebsiteController extends Controller
             'fasilitas',
             'about-us',
             'menu',
-            'alumni',
-            'alumni-show'
+            'alumni'
         ];
     }
 
@@ -33,7 +32,6 @@ class WebsiteController extends Controller
 
     public function views($item)
     {
-        // dd($item);
         if (!in_array($item, $this->items)) {
             return abort(404);
         }

@@ -2,17 +2,10 @@
     <form wire:submit.prevent="save">
         <div class="px-4 py-5 sm:p-6 md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
-                <h3 class="text-lg font-medium leading-6 text-gray-900">Buat Artikel</h3>
+                <h3 class="text-lg font-medium leading-6 text-gray-900">Tambah Data Alumni</h3>
 
                 <div class="space-y-6">
-                    <div>
-                        <label class="mb-1 block text-sm font-medium text-gray-700">
-                            Cover image
-                        </label>
-                        <x-file-attachment wire:model="image" :file="$image" />
-                    </div>
                     <div class="grid grid-cols-2">
-                        <x-select label="Kategori" name="category_id" :list="$categories" livewire />
                         <div class="space-x-4">
                             <div class="mb-7"></div>
                             <button
@@ -34,12 +27,12 @@
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
                 <div class="space-y-6">
-                    <x-input label="Judul" name="title" livewire />
-                    <x-input label="Slug" name="slug" livewire />
-                    <x-tinymce wire:model="body" placeholder="Ketikan konten disini..." />
-                    @error('body')
-                        <p class="mt-2 text-xs font-semibold text-red-600" id="email-error">{{ $message }}</p>
-                    @enderror
+                    <x-input label="Nama" name="nama" livewire />
+                    <x-input label="Jurusan" name="jurusan" livewire />
+                    <x-input label="Nama Kampus" name="nama_kampus" livewire />
+                    <x-select label="Kampus Milik" name="kampus_milik" :list="$listKampusMilik" livewire />
+                    <x-select label="Letak Kampus" name="letak_kampus" :list="$listLetakKampus" livewire />
+                    <x-select label="Tahun Lulus" name="tahun_lulus" :list="$listTahunLulus" livewire />
                 </div>
             </div>
         </div>

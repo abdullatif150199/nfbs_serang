@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Dash\Alumni;
 
 use Livewire\Component;
 use App\Models\Alumni;
-use App\Models\Angkatan;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
@@ -59,9 +58,21 @@ class Table extends DataTableComponent
             return Alumni::query()->latest();
         }
 
+        public function deleteConfirm($id)
+    {
+        $this->dispatchBrowserEvent('swal:confirm', [
+            'type' => 'warning',
+            'title' => 'Yakin ingin menghapus?',
+            'text' => '',
+            'id' => $id,
+            'method' => 'delete'
+        ]);
+    }
 
+    public function delete($id)
+    {
+        $alumni = Alumni::findOrFail($id);
+        $alumni->delete();
+    }
 
-
-
-    
 }

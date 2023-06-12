@@ -31,7 +31,7 @@ class AlumniSeeder extends Seeder
                     'jurusan' => $faker->randomElement(['Teknik Informatika', 'Akuntansi', 'Hukum']),
                     'nama_kampus' => Arr::random($namaKampus),
                     'letak_kampus' => $faker->randomElement(['Luar Negeri', 'Dalam Negeri']),
-                    'kampus_milik' => $faker->randomElement(['Negeri', 'Swasta']),
+                    'jenis_kampus' => $faker->randomElement(['Negeri', 'Swasta']),
                     'tahun_lulus' => $faker->randomElement(['2020', '2021', '2022']),
                     'created_at' => now(),
                     'updated_at' => now(),

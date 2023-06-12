@@ -14,12 +14,12 @@ class Form extends Component
     public $nama;
     public $jurusan;
     public $nama_kampus;
-    public $kampus_milik;
+    public $jenis_kampus;
     public $letak_kampus;
     public $tahun_lulus;
     public $image;
     public $published_at;
-    public $listKampusMilik;
+    public $listJenisKampus;
     public $listLetakKampus;
     public $listTahunLulus;
   
@@ -32,18 +32,18 @@ class Form extends Component
             $this->nama = $this->alumni->nama;
             $this->jurusan = $this->alumni->jurusan;
             $this->nama_kampus = $this->alumni->nama_kampus;
-            $this->kampus_milik = $this->alumni->kampus_milik;
+            $this->jenis_kampus = $this->alumni->jenis_kampus;
             $this->letak_kampus = $this->alumni->letak_kampus;
             $this->tahun_lulus = $this->alumni->tahun_lulus;
             $this->image = $this->alumni->image;
         }
 
-        $this->listKampusMilik = [
-            'swasta' => 'swasta',
-            'negeri' => 'negeri'];
+        $this->listJenisKampus = [
+            'Swasta' => 'Swasta',
+            'Negeri' => 'Negeri'];
         $this->listLetakKampus = [
-            'dalam negeri' => 'dalam negeri',
-            'luar negeri' => 'luar negeri'
+            'Dalam Negeri' => 'Dalam Negeri',
+            'Luar Negeri' => 'Luar Negeri'
         ];
         $this->listTahunLulus = array_combine(range(2000, 2050), range(2000, 2050));
 
@@ -62,7 +62,7 @@ class Form extends Component
             'jurusan' => 'required|max:225',
             'nama_kampus' => 'required|max:225',
             'letak_kampus' => 'required|max:225',
-            'kampus_milik' => 'required|max:225',
+            'jenis_kampus' => 'required|max:225',
             'tahun_lulus' => 'required|max:225'
         ]);
 
@@ -74,7 +74,7 @@ class Form extends Component
             $alumni->jurusan = $validatedData['jurusan'];
             $alumni->nama_kampus = $validatedData['nama_kampus'];
             $alumni->letak_kampus = $validatedData['letak_kampus'];
-            $alumni->kampus_milik = $validatedData['kampus_milik'];
+            $alumni->jenis_kampus = $validatedData['jenis_kampus'];
             $alumni->tahun_lulus = $validatedData['tahun_lulus'];
             $alumni->save();
         } else {

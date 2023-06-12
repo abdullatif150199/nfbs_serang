@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Dash;
 
 use App\Http\Controllers\Controller;
-use App\Models\Angkatan;
+use App\Imports\AlumniImport;
+use Maatwebsite\Excel\Facades\Excel; 
+use Illuminate\Http\Request;
 
 class WebsiteController extends Controller
 {
@@ -65,20 +67,31 @@ class WebsiteController extends Controller
         ]);
     }
 
-    public function show ($item, $id) 
+    // public function show ($item, $id) 
+    // {
+    //     if (!in_array($item, $this->items)) {
+    //         return abort(404);
+    //     }
+
+    //     $angkatan = Angkatan::where('id', $id)->first();
+    //     return view("dash.website.{$item}-index", [
+    //         'item' => $item,
+    //         'id' => $id,
+    //         'angkatan' => $angkatan
+
+    //     ]);
+    // }
+
+    public function import(Request $request)
     {
-        if (!in_array($item, $this->items)) {
-            return abort(404);
-        }
+        // dd($request);
+        $file = $request->file('file');
+        $namaFile = $file->getClientOriginalName();
+        $file->move('DataAlumni', $namaFile);
 
-        $angkatan = Angkatan::where('id', $id)->first();
-        return view("dash.website.{$item}-index", [
-            'item' => $item,
-            'id' => $id,
-            'angkatan' => $angkatan
+        Excel::import(new AlumniImport, public_path('/DataAlumni/'.$namaFile));
+        // Excel::import(new AlumniImport, 'alumni.xlsx');
 
-        ]);
+        return redirect('/dashboard/alumni');
     }
-
-    
 }

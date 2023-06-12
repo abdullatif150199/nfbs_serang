@@ -52,10 +52,53 @@ class Table extends DataTableComponent
                     })->asHtml(),
             ];
         }
+
+        public function filters(): array
+        {
+            $init = ['' => 'Semua'];
+            $tahunLulus = Alumni::distinct()->pluck('tahun_lulus')->toArray();
+            $nama_kampus = Alumni::distinct()->pluck('nama_kampus')->toArray();
+            $letakKampus = [
+                'Luar Negeri' => 'Luar Negeri', 
+                'Dalam Negeri' => 'Dalam Negeri'];
+                $jenisKampus = [
+                    'Negeri' => 'Negeri', 
+                    'Swasta' => 'Swasta'];
+            $tahunLulus_arr = $init + array_combine($tahunLulus, $tahunLulus);
+            $namaKampus_arr = $init + array_combine($nama_kampus, $nama_kampus);
+            $letakKampus_arr = $init + $letakKampus;
+            $jenisKampus_arr = $init + $jenisKampus;
+            // dd($namaKampus_arr);
+            return [
+                'tahun_lulus' => Filter::make('Angkatan')
+                    ->select($tahunLulus_arr),
+                'nama_kampus' => Filter::make('Nama kampus')
+                        ->select($namaKampus_arr),
+                'letak_kampus' => Filter::make('Letak kampus')
+                    ->select($letakKampus_arr),
+                'jenis_kampus' => Filter::make('Jenis kampus')
+                    ->select($jenisKampus_arr),
+            ];
+        }
     
         public function query(): Builder
         {
-            return Alumni::query()->latest();
+            $query = Alumni::query()->latest();
+            
+            if ($this->filters['tahun_lulus']) {
+                $query->where('tahun_lulus', $this->filters['tahun_lulus']);
+            }
+            if ($this->filters['letak_kampus']) {
+                $query->where('letak_kampus', $this->filters['letak_kampus']);
+            }
+            
+            if ($this->filters['jenis_kampus']) {
+                $query->where('jenis_kampus', $this->filters['jenis_kampus']);
+            }
+            if ($this->filters['nama_kampus']) {
+                $query->where('nama_kampus', $this->filters['nama_kampus']);
+            }
+            return $query;
         }
 
         public function deleteConfirm($id)

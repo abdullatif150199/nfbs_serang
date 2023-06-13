@@ -38,7 +38,8 @@ Route::name('dash.')
         Route::get('/{item}/create', [WebsiteController::class, 'create'])->name('create');
         Route::get('/{item}/{id}/edit', [WebsiteController::class, 'edit'])->name('edit');
 
-        Route::post('/import', [WebsiteController::class, 'import'])->name('import');
+        Route::post('/{item}/import', [WebsiteController::class, 'import'])->name('import');
+        Route::post('/{item}/export', [WebsiteController::class, 'export'])->name('export');
     });
 
 Route::get('/', [PostController::class, 'index'])->name('home');

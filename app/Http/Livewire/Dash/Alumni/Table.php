@@ -12,9 +12,22 @@ use Rappasoft\LaravelLivewireTables\Views\Filter;
 
 class Table extends DataTableComponent
 {
+    public $tahunLulus;
+    public $namaKampus = [];
+    public $filterNamaKampus;
+
     protected $listeners = [
         'delete'
     ];
+
+            public function mount()
+        {
+            $this->tahunLulus = Alumni::distinct()->pluck('tahun_lulus')->toArray();
+            // $this->tahunLulus = ['2021'];
+            // $this->filters['nama_kampus'] = Filter::make('Nama kampus')->select([]);
+            $this->updatedTahunLulus();
+        }
+    
         public function columns(): array
         {
             return [
@@ -53,32 +66,49 @@ class Table extends DataTableComponent
             ];
         }
 
+             public function updatedTahunLulus()
+        {
+            if (!empty($this->tahunLulus) && $this->tahunLulus != ' ') {
+                $this->namaKampus = Alumni::where('tahun_lulus', $this->tahunLulus)
+                    ->distinct()
+                    ->pluck('nama_kampus')
+                    ->toArray();
+            } else {
+                $this->namaKampus = [];
+            }
+
+            $this->resetNamaKampus();
+        }
+
+        public function resetNamaKampus()
+        {
+            // $this->tahunLulus = $this->filters['tahun_lulus'];
+            $this->filters()['nama_kampus']->select(['' => 'Semua'] + array_combine($this->namaKampus, $this->namaKampus));
+        }
+
         public function filters(): array
         {
             $init = ['' => 'Semua'];
-            $tahunLulus = Alumni::distinct()->pluck('tahun_lulus')->toArray();
-            $nama_kampus = Alumni::distinct()->pluck('nama_kampus')->toArray();
             $letakKampus = [
                 'Luar Negeri' => 'Luar Negeri', 
                 'Dalam Negeri' => 'Dalam Negeri'];
-                $jenisKampus = [
-                    'Negeri' => 'Negeri', 
+            $jenisKampus = [
+                    'Negeri' => 'Negeri',
                     'Swasta' => 'Swasta'];
-            $tahunLulus_arr = $init + array_combine($tahunLulus, $tahunLulus);
-            $namaKampus_arr = $init + array_combine($nama_kampus, $nama_kampus);
+            $tahunLulus_arr = $init + array_combine($this->tahunLulus, $this->tahunLulus);
+            $namaKampus_arr = $init + array_combine($this->namaKampus, $this->namaKampus);
             $letakKampus_arr = $init + $letakKampus;
             $jenisKampus_arr = $init + $jenisKampus;
-            // dd($namaKampus_arr);
-            return [
-                'tahun_lulus' => Filter::make('Angkatan')
-                    ->select($tahunLulus_arr),
-                'nama_kampus' => Filter::make('Nama kampus')
-                        ->select($namaKampus_arr),
-                'letak_kampus' => Filter::make('Letak kampus')
-                    ->select($letakKampus_arr),
-                'jenis_kampus' => Filter::make('Jenis kampus')
-                    ->select($jenisKampus_arr),
+
+            $filters = [
+                'tahun_lulus' => Filter::make('Angkatan')->select($tahunLulus_arr),
+                'letak_kampus' => Filter::make('Letak kampus')->select($letakKampus_arr),
+                'jenis_kampus' => Filter::make('Jenis kampus')->select($jenisKampus_arr),
             ];
+        
+            $filters['nama_kampus'] = Filter::make('Nama kampus')->select($namaKampus_arr);
+            return $filters;
+            
         }
     
         public function query(): Builder
@@ -95,27 +125,29 @@ class Table extends DataTableComponent
             if ($this->filters['jenis_kampus']) {
                 $query->where('jenis_kampus', $this->filters['jenis_kampus']);
             }
+
             if ($this->filters['nama_kampus']) {
                 $query->where('nama_kampus', $this->filters['nama_kampus']);
             }
+
             return $query;
         }
 
-        public function deleteConfirm($id)
-    {
-        $this->dispatchBrowserEvent('swal:confirm', [
-            'type' => 'warning',
-            'title' => 'Yakin ingin menghapus?',
-            'text' => '',
-            'id' => $id,
-            'method' => 'delete'
-        ]);
-    }
+            public function deleteConfirm($id)
+        {
+            $this->dispatchBrowserEvent('swal:confirm', [
+                'type' => 'warning',
+                'title' => 'Yakin ingin menghapus?',
+                'text' => '',
+                'id' => $id,
+                'method' => 'delete'
+            ]);
+        }
 
-    public function delete($id)
-    {
-        $alumni = Alumni::findOrFail($id);
-        $alumni->delete();
-    }
+        public function delete($id)
+        {
+            $alumni = Alumni::findOrFail($id);
+            $alumni->delete();
+        }
 
 }

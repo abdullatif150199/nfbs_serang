@@ -34,7 +34,6 @@ class AlumniExport implements FromCollection, WithHeadings
 
     public function collection()
     {
-        dd($this->items);
         $data = [];
 
         foreach ($this->items as $item) {

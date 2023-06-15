@@ -5,6 +5,7 @@ use App\Http\Controllers\Dash\UserController;
 use App\Http\Controllers\Dash\WebsiteController;
 use App\Http\Controllers\Dash\DashboardController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\AlumniController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,8 @@ Route::get('/faq', [PostController::class, 'faq'])->name('faq');
 // Route::get('/videos', [PostController::class, 'videos'])->name('post.videos');
 // Route::get('/fasilitas', [PostController::class, 'facilities'])->name('post.facilities');
 Route::get('/artikel', [PostController::class, 'articles'])->name('post.articles');
+Route::get('/alumni', [AlumniController::class, 'index'])->name('alumni');
+
 Route::get('/{slug}', [PostController::class, 'show'])->name('post.show');
 Route::get('/program/{program}', [PostController::class, 'program'])->name('post.program');
 Route::get('/category/{category}', [PostController::class, 'category'])->name('category');

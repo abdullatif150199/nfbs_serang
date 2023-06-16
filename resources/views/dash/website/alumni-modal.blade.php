@@ -20,6 +20,7 @@
     </div>
 </div>
 
+<!-- Modal Export -->
 <div id="modalExport " class="fixed z-10 top-0 left-0 w-full h-full flex items-center justify-center hidden">
     <div class="bg-white rounded shadow-lg mx-auto">
         <form action="{{ route('dash.export','alumni') }}" method="POST" enctype="multipart/form-data">
@@ -28,16 +29,8 @@
                 <div class="text-lg font-bold mb-2">Export Data Alumni</div>
                     <div class="mb-4">
                         <label>Tahun Lulus</label>
-                        <select name="tahun_lulus" class='w-full'>
+                        <select name="tahun_lulus" class='w-full' onchange="updateTahunLulus(this.value)">
                             @foreach ($listTahunLulus as $key => $val)
-                            <option value="{{ $key }}">{{ $val }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-4">
-                        <label>Nama Kampus</label>
-                        <select name="nama_kampus" class='w-full'>
-                            @foreach ($listNamaKampus as $key => $val)
                             <option value="{{ $key }}">{{ $val }}</option>
                             @endforeach
                         </select>
@@ -58,6 +51,14 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="mb-4">
+                        <label>Nama Kampus</label>
+                        <select name="nama_kampus" class='w-full'>
+                            @foreach ($listNamaKampus as $key => $val)
+                            <option value="{{ $key }}">{{ $val }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 <div class="text-right">
                     <button id="closeModalExport" class="bg-gray-500 hover:bg-gray-700 text-white  py-1 px-2 rounded">
                         Cancel
@@ -69,7 +70,25 @@
     </div>
 </div>
 
-<!-- Modal Export -->
+<script>
+    function updateTahunLulus(tahun) {
+        axios.get('/export', {
+            params: {
+                tahun: tahun
+            }
+        })
+        .then(function (response) {
+            console.log(response);
+            
+            var tahunLulus = response.data;
+            
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+</script>
+
 
 
 

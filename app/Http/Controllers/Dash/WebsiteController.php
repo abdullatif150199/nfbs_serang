@@ -43,7 +43,7 @@ class WebsiteController extends Controller
         if($item === 'alumni') {
             $init = ['' => 'Semua'];
             $tahunLulus = Alumni::distinct()->pluck('tahun_lulus')->toArray();
-            $nama_kampus = Alumni::distinct()->pluck('nama_kampus')->toArray();
+            $nama_kampus = Alumni::where('tahun_lulus', $tahunLulus)->distinct()->pluck('nama_kampus')->toArray();
             $letakKampus = [
                 'Luar Negeri' => 'Luar Negeri', 
                 'Dalam Negeri' => 'Dalam Negeri'];
@@ -105,6 +105,8 @@ class WebsiteController extends Controller
     public function export(Request $request) 
     {
         // dd($request);
+        $tahun = $request->input('tahun');
+        dd($tahun);
         $nama_kampus = $request->nama_kampus;
         $tahun_lulus = $request->tahun_lulus;
         $letak_kampus = $request->letak_kampus;

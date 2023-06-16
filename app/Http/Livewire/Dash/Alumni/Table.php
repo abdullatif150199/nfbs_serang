@@ -14,7 +14,6 @@ class Table extends DataTableComponent
 {
     public $tahunLulus;
     public $namaKampus = [];
-    public $filterNamaKampus;
 
     protected $listeners = [
         'delete'
@@ -37,7 +36,6 @@ class Table extends DataTableComponent
                     ->format(function ($value, $column, $row) {
                         return $row->nama; 
                     })->asHtml(),
-        
                 Column::make('jurusan', 'jurusan')
                     ->searchable()
                     ->sortable()
@@ -66,15 +64,15 @@ class Table extends DataTableComponent
             ];
         }
 
-             public function updatedTahunLulus()
-        {
-            if (!empty($this->tahunLulus) && $this->tahunLulus != ' ') {
+        public function updatedTahunLulus()
+        {  $this->namaKampus = [];
+            if (!empty($this->tahunLulus)) {
                 $this->namaKampus = Alumni::where('tahun_lulus', $this->tahunLulus)
                     ->distinct()
                     ->pluck('nama_kampus')
                     ->toArray();
             } else {
-                $this->namaKampus = [];
+                $this->namaKampus = Alumni::distinct()->pluck('nama_kampus')->toArray();
             }
 
             $this->resetNamaKampus();
@@ -82,37 +80,41 @@ class Table extends DataTableComponent
 
         public function resetNamaKampus()
         {
-            // $this->tahunLulus = $this->filters['tahun_lulus'];
             $this->filters()['nama_kampus']->select(['' => 'Semua'] + array_combine($this->namaKampus, $this->namaKampus));
         }
 
         public function filters(): array
         {
             $init = ['' => 'Semua'];
+            $tahunLulus = Alumni::distinct()->pluck('tahun_lulus')->toArray();
             $letakKampus = [
                 'Luar Negeri' => 'Luar Negeri', 
                 'Dalam Negeri' => 'Dalam Negeri'];
             $jenisKampus = [
                     'Negeri' => 'Negeri',
                     'Swasta' => 'Swasta'];
-            $tahunLulus_arr = $init + array_combine($this->tahunLulus, $this->tahunLulus);
+           
+                    // dd($this->tahunLulus);
+            $tahunLulus_arr = $init + array_combine($tahunLulus, $tahunLulus);
             $namaKampus_arr = $init + array_combine($this->namaKampus, $this->namaKampus);
             $letakKampus_arr = $init + $letakKampus;
             $jenisKampus_arr = $init + $jenisKampus;
-
+            
+            
             $filters = [
                 'tahun_lulus' => Filter::make('Angkatan')->select($tahunLulus_arr),
                 'letak_kampus' => Filter::make('Letak kampus')->select($letakKampus_arr),
                 'jenis_kampus' => Filter::make('Jenis kampus')->select($jenisKampus_arr),
             ];
-        
             $filters['nama_kampus'] = Filter::make('Nama kampus')->select($namaKampus_arr);
+        
             return $filters;
             
         }
     
         public function query(): Builder
         {
+          
             $query = Alumni::query()->latest();
             
             if ($this->filters['tahun_lulus']) {
@@ -128,7 +130,7 @@ class Table extends DataTableComponent
 
             if ($this->filters['nama_kampus']) {
                 $query->where('nama_kampus', $this->filters['nama_kampus']);
-            }
+            } 
 
             return $query;
         }

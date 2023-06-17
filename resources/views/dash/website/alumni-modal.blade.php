@@ -31,7 +31,7 @@
                         <label>Tahun Lulus</label>
                         <select name="tahun_lulus" class='w-full' onchange="updateTahunLulus(this.value)">
                             @foreach ($listTahunLulus as $key => $val)
-                            <option value="{{ $key }}">{{ $val }}</option>
+                                <option value="{{ $key }}">{{ $val }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -72,13 +72,13 @@
 
 <script>
     function updateTahunLulus(tahun) {
-        axios.get('/export', {
+        axios.get('/update-tahun-lulus', {
             params: {
                 tahun: tahun
             }
         })
         .then(function (response) {
-            console.log(response);
+            console.log(response.data);
             
             var tahunLulus = response.data;
             

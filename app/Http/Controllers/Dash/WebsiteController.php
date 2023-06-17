@@ -102,11 +102,19 @@ class WebsiteController extends Controller
         return redirect('/dashboard/alumni')->with('success', 'Data Alumni Berhasil Di Import!');
     }
 
+    public function updateTahunLulus(Request $request)
+    {
+        $tahun = $request->input('tahun');
+        dd($tahun);
+        $namaKampus = Alumni::where('tahun_lulus', $tahun)->distinct()->pluck('nama_kampus')->toArray();
+        return response()->json($namaKampus);
+    }
+
     public function export(Request $request) 
     {
         // dd($request);
-        $tahun = $request->input('tahun');
-        dd($tahun);
+        // $tahun = $request->input('tahun');
+        // dd($tahun);
         $nama_kampus = $request->nama_kampus;
         $tahun_lulus = $request->tahun_lulus;
         $letak_kampus = $request->letak_kampus;

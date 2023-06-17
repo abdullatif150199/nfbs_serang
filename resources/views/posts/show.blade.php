@@ -43,7 +43,7 @@
                 <span class="text-gray-100 text-sm font-light">
                     <a href="{{ route('category', $post->category->slug) }}"
                         class="px-4 py-1 bg-blue-600 rounded-full">{{ $post->category->title }}</a>
-                    {{-- <span class="text-gray-500">{{ $post->date }}</span> --}}
+                     <!-- <span class="text-gray-500">{{ $post->date }}</span> -->
                 </span>
             </h2>
         </div>

@@ -1,0 +1,3 @@
+<p>
+    {{ $data->jurusan }}
+</p>

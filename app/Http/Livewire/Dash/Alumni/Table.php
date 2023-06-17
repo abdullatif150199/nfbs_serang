@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
+use Illuminate\Support\Str;
 
 class Table extends DataTableComponent
 {
@@ -22,47 +23,47 @@ class Table extends DataTableComponent
             public function mount()
         {
             $this->tahunLulus = Alumni::distinct()->pluck('tahun_lulus')->toArray();
-            // $this->tahunLulus = ['2021'];
-            // $this->filters['nama_kampus'] = Filter::make('Nama kampus')->select([]);
             $this->updatedTahunLulus();
         }
     
         public function columns(): array
-        {
-            return [
-                Column::make('nama','nama')
-                    ->sortable()
-                    ->searchable()
-                    ->format(function ($value, $column, $row) {
-                        return $row->nama; 
-                    })->asHtml(),
-                Column::make('jurusan', 'jurusan')
-                    ->searchable()
-                    ->sortable()
-                    ->format(function ($value, $column, $row) {
-                        return $row->jurusan;
-                    })->asHtml(),
-                Column::make('nama kampus', 'nama_kampus')
-                    ->searchable()
-                    ->sortable()
-                    ->format(function ($value, $column, $row) {
-                        return $row->nama_kampus;
-                    })->asHtml(),
-                Column::make('tahun lulus', 'tahun_lulus')
-                    ->searchable()
-                    ->sortable()
-                    ->format(function ($value, $column, $row) {
-                        return $row->tahun_lulus;
-                })->asHtml(),
-                Column::make('Action')
-                    ->sortable()
-                    ->format(function ($value, $column, $row) {
-                        return view('livewire.dash.alumni._actions', [
-                            'data' => $row,
-                        ]);
-                    })->asHtml(),
-            ];
-        }
+            {
+                $columns = [
+                    Column::make('nama', 'nama')
+                        ->sortable()
+                        ->searchable()
+                        ->format(function ($value, $column, $row) {
+                            return $row->nama; 
+                        })->asHtml(),
+                    Column::make('jurusan', 'jurusan')
+                        ->searchable()
+                        ->sortable()
+                        ->format(function ($value, $column, $row) {
+                            return $row->jurusan;
+                        })->asHtml(),
+                    Column::make('nama kampus', 'nama_kampus')
+                        ->searchable()
+                        ->sortable()
+                        ->format(function ($value, $column, $row) {
+                            return $row->nama_kampus;
+                        })->asHtml(),
+                    Column::make('tahun lulus', 'tahun_lulus')
+                        ->searchable()
+                        ->sortable()
+                        ->format(function ($value, $column, $row) {
+                            return $row->tahun_lulus;
+                        })->asHtml(),
+                    Column::make('Action')
+                        ->sortable()
+                        ->format(function ($value, $column, $row) {
+                            return view('livewire.dash.alumni._actions', [
+                                'data' => $row,
+                            ]);
+                        })->asHtml()
+                   
+                ];
+                return $columns;
+            }
 
         public function updatedTahunLulus()
         {  $this->namaKampus = [];

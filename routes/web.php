@@ -64,3 +64,6 @@ Route::domain('rekrutmen.' . config('app.domain'))
             return redirect()->away('https://forms.gle/GrUe7TjF4rV4dWCz6');
         });
     });
+
+
+    Route::get('/update-tahun-lulus', [AlumniController::class, 'updateTahunLulus'])->name('update.tahun');

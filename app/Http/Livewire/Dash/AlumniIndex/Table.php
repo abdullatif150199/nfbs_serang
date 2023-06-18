@@ -13,11 +13,14 @@ use Rappasoft\LaravelLivewireTables\Views\Filter;
 class Table extends  DataTableComponent
 {
     public $tahunLulus;
+    public $columnSize;
+
     public $namaKampus = [];
 
     public function mount()
     {
         $this->tahunLulus = Alumni::distinct()->pluck('tahun_lulus')->toArray();
+        $this->columnSize = request()->is('alumni*') ? 'px-2 py-1 md:px-4 md:py-2' : 'px-3 py-2 md:px-6 md:py-4';
         $this->updatedTahunLulus();
     }
 
@@ -92,18 +95,20 @@ class Table extends  DataTableComponent
 
     public function query(): Builder
     {
-      
         $query = Alumni::query()->latest();
-        
+    
         if ($this->filters['tahun_lulus']) {
             $query->where('tahun_lulus', $this->filters['tahun_lulus']);
         }
-
-        if ($this->filters['nama_kampus']) {
+    
+        if (!empty($this->filters['nama_kampus']) && in_array($this->filters['nama_kampus'], $this->namaKampus)) {
             $query->where('nama_kampus', $this->filters['nama_kampus']);
-        } 
-
+        } else if (!empty($this->filters['nama_kampus']) && !in_array($this->filters['nama_kampus'], $this->namaKampus)) {
+            $query->whereRaw('1 = 0'); // Menampilkan data tidak ditemukan jika filter tidak valid
+        }
+    
         return $query;
     }
+    
     
 }

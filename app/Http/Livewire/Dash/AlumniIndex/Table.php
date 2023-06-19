@@ -14,14 +14,44 @@ class Table extends  DataTableComponent
 {
     public $tahunLulus;
     public $columnSize;
+    public $title;
+    public $selectedYear= [];
 
     public $namaKampus = [];
 
     public function mount()
     {
         $this->tahunLulus = Alumni::distinct()->pluck('tahun_lulus')->toArray();
+        $this->selectedYear = [Alumni::max('tahun_lulus')];
         $this->columnSize = request()->is('alumni*') ? 'px-2 py-1 md:px-4 md:py-2' : 'px-3 py-2 md:px-6 md:py-4';
-        $this->updatedTahunLulus();
+        $this->title = ' DAFTAR SEBARAN ALUMNI ANGKATAN ' .  implode(', ', (array) $this->selectedYear);
+        // $this->updatedTahunLulus();
+    }
+    public function updatedTahunLulus()
+    {  
+        if (!empty($this->tahunLulus)) {
+            $this->namaKampus = Alumni::where('tahun_lulus', $this->tahunLulus)
+                ->distinct()
+                ->pluck('nama_kampus')
+                ->toArray();
+        } else {
+            $this->namaKampus = Alumni::distinct()->pluck('nama_kampus')->toArray();
+        }
+        $this->resetNamaKampus();
+        $this->resetSelectedYear();
+    }
+
+    public function resetSelectedYear()
+    {
+        
+        $this->selectedYear = [$this->tahunLulus];
+
+        // dd($this->selectedYear, $this->tahunLulus);
+    }
+
+    public function resetNamaKampus()
+    {
+        $this->filters()['nama_kampus']->select(['' => 'Semua'] + array_combine($this->namaKampus, $this->namaKampus));
     }
 
     public function columns(): array
@@ -31,57 +61,36 @@ class Table extends  DataTableComponent
                 ->sortable()
                 ->searchable()
                 ->format(function ($value, $column, $row) {
-                    return view('livewire.dash.alumni-index.nama', [
-                        'data' => $row,
-                    ]);
+                    return $row->nama;
                 })->asHtml(),
             Column::make('jurusan', 'jurusan')
                 ->searchable()
                 ->sortable()
                 ->format(function ($value, $column, $row) {
-                    return view('livewire.dash.alumni-index.jurusan', [
-                        'data' => $row,
-                    ]);
+                    return $row->jurusan;
                 })->asHtml(),
             Column::make('nama kampus', 'nama_kampus')
                 ->searchable()
                 ->sortable()
                 ->format(function ($value, $column, $row) {
-                    return view('livewire.dash.alumni-index.nama-kampus', [
-                        'data' => $row,
-                    ]);
+                    return $row->nama_kampus;
                 })->asHtml()
            
         ];
         return $columns;
     }
 
-    public function updatedTahunLulus()
-    {  $this->namaKampus = [];
-        if (!empty($this->tahunLulus)) {
-            $this->namaKampus = Alumni::where('tahun_lulus', $this->tahunLulus)
-                ->distinct()
-                ->pluck('nama_kampus')
-                ->toArray();
-        } else {
-            $this->namaKampus = Alumni::distinct()->pluck('nama_kampus')->toArray();
-        }
 
-        $this->resetNamaKampus();
-    }
-
-    public function resetNamaKampus()
-    {
-        $this->filters()['nama_kampus']->select(['' => 'Semua'] + array_combine($this->namaKampus, $this->namaKampus));
-    }
 
     public function filters(): array
     {
         $init = ['' => 'Semua'];
         $tahunLulus = Alumni::distinct()->pluck('tahun_lulus')->toArray();
+        $selectedYear = array_combine($this->selectedYear, $this->selectedYear);
+        // dd($selectedYear);
+        
      
-        // dd($this->tahunLulus);
-        $tahunLulus_arr = $init + array_combine($tahunLulus, $tahunLulus);
+        $tahunLulus_arr = $selectedYear + array_combine($tahunLulus, $tahunLulus);
         $namaKampus_arr = $init + array_combine($this->namaKampus, $this->namaKampus);
         
         $filters = [
@@ -95,20 +104,25 @@ class Table extends  DataTableComponent
 
     public function query(): Builder
     {
-        $query = Alumni::query()->latest();
-    
+        $query = Alumni::query();
+        
         if ($this->filters['tahun_lulus']) {
             $query->where('tahun_lulus', $this->filters['tahun_lulus']);
         }
-    
+
         if (!empty($this->filters['nama_kampus']) && in_array($this->filters['nama_kampus'], $this->namaKampus)) {
-            $query->where('nama_kampus', $this->filters['nama_kampus']);
-        } else if (!empty($this->filters['nama_kampus']) && !in_array($this->filters['nama_kampus'], $this->namaKampus)) {
-            $query->whereRaw('1 = 0'); // Menampilkan data tidak ditemukan jika filter tidak valid
+                $query->where('nama_kampus', $this->filters['nama_kampus']);
+            } else if (!empty($this->filters['nama_kampus']) && !in_array($this->filters['nama_kampus'], $this->namaKampus)) {
+         $query->whereRaw('1 = 0');
         }
-    
+
+        if (empty($this->filters['tahun_lulus']) && empty($this->filters['nama_kampus'])) {
+            $query->where('tahun_lulus', $this->selectedYear);
+        } else {
+            $query->latest();
+        }
+
         return $query;
     }
-    
-    
+
 }

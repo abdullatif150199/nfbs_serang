@@ -1,4 +1,12 @@
+
 <div>
+    @if(!empty($this->selectedYear))
+    <div class="flex items-center justify-center text-center px-4 py-4 w-full border-b mb-3">
+            <div class="text-md font-medium uppercase text-gray-700 ">
+           Daftar Sebaran Alumni Angkatan {{ implode(', ', $this->selectedYear) }}
+            </div>
+    </div>
+    @endif
     <div
         @if (is_numeric($refresh))
             wire:poll.{{ $refresh }}ms

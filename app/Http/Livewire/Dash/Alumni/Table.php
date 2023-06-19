@@ -129,9 +129,11 @@ class Table extends DataTableComponent
                 $query->where('jenis_kampus', $this->filters['jenis_kampus']);
             }
 
-            if ($this->filters['nama_kampus']) {
+            if (!empty($this->filters['nama_kampus']) && in_array($this->filters['nama_kampus'], $this->namaKampus)) {
                 $query->where('nama_kampus', $this->filters['nama_kampus']);
-            } 
+             } else if (!empty($this->filters['nama_kampus']) && !in_array($this->filters['nama_kampus'], $this->namaKampus)) {
+                $query->whereRaw('1 = 0');
+            }
 
             return $query;
         }

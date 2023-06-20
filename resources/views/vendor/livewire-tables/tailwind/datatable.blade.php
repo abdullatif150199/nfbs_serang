@@ -48,7 +48,26 @@
         </div>
     </div>
 
+    @if(!empty($this->selectedYear))
+        <div class="px-4 py-4 mt-5 w-full mb-3">
+            <div>
+                <p><b>Sebaran Kampus Angkatan {{ implode(', ', $this->selectedYear) }}</b></p>
+            </div>
+            <div >
+                <ul style="list-style-type: disc;" class="ml-4" >
+                    @foreach($this->kampusList as $item)
+                        <li><small>{{$item->nama_kampus}} : {{$item->total}} Orang</small></li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    @endif
+
+
+
     @isset($modalsView)
         @include($modalsView)
     @endisset
 </div>
+
+

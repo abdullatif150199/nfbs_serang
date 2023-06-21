@@ -28,7 +28,9 @@ class Table extends  DataTableComponent
         $this->kampusList = Alumni::whereIn('tahun_lulus', $this->selectedYear)
         ->groupBy('nama_kampus')
         ->select('nama_kampus', \DB::raw('count(*) as total'))
-        ->get();
+        ->get()
+        ->pluck('total', 'nama_kampus')
+        ->toArray();
     }
 
 
@@ -43,24 +45,26 @@ class Table extends  DataTableComponent
             $this->namaKampus = Alumni::distinct()->pluck('nama_kampus')->toArray();
         }
 
-        $this->resetNamaKampus();
         $this->resetSelectedYear();
+        $this->resetNamaKampus();
     }
 
+    
     public function resetSelectedYear()
     {
         $this->selectedYear = [$this->tahunLulus];
         $this->kampusList = Alumni::whereIn('tahun_lulus', $this->selectedYear)
         ->groupBy('nama_kampus')
         ->select('nama_kampus', \DB::raw('count(*) as total'))
-        ->get();
-
+        ->get()
+        ->pluck('total', 'nama_kampus')
+        ->toArray();
+    
     }
 
     public function resetNamaKampus()
     {
         $this->filters()['nama_kampus']->select(['' => 'Semua'] + array_combine($this->namaKampus, $this->namaKampus));
-        
     }
 
     public function columns(): array
@@ -98,18 +102,16 @@ class Table extends  DataTableComponent
         $selectedYear = array_combine($this->selectedYear, $this->selectedYear);
         $tahunLulus_arr = $selectedYear + array_combine($tahunLulus, $tahunLulus);
         $namaKampus_arr = $init + array_combine($this->namaKampus, $this->namaKampus);
-        
         $filters = [
             'tahun_lulus' => Filter::make('Angkatan')->select($tahunLulus_arr),
             'nama_kampus' => Filter::make('Nama kampus')->select($namaKampus_arr)
         ];
-    
         return $filters;
-        
     }
 
     public function query(): Builder
     {
+        // dd($this->kampusList);
         $query = Alumni::query();
         
         if ($this->filters['tahun_lulus']) {

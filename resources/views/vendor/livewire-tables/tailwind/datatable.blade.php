@@ -49,14 +49,14 @@
     </div>
 
     @if(!empty($this->selectedYear))
-        <div class="px-4 py-4 mt-5 w-full mb-3">
+        <div class="px-1 py-4 mt-5 w-full mb-3">
             <div>
                 <p><b>Sebaran Kampus Angkatan {{ implode(', ', $this->selectedYear) }}</b></p>
             </div>
-            <div >
-                <ul style="list-style-type: disc;" class="ml-4" >
-                    @foreach($this->kampusList as $item)
-                        <li><small>{{$item->nama_kampus}} : {{$item->total}} Orang</small></li>
+            <div class="px-5">
+                <ul style="list-style-type: disc;"  >
+                    @foreach($this->kampusList as $kampus => $jumlah)
+                        <li><small>{{$kampus}} : {{$jumlah}} Orang</small></li>
                     @endforeach
                 </ul>
             </div>

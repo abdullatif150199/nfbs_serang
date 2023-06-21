@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="row my-10 z-10">
-            <div class="mx-4 my-10 shadow bg-white sm:-mx-6 md:mx-0 md:rounded-lg">
+            <div class="mx-4 my-10 bg-white sm:-mx-6 md:mx-0 md:rounded-lg">
                 <div class="divide-y">
                     <!-- <div class="flex items-center justify-center text-center px-4 py-4 w-full">
                         <div class="text-md font-small uppercase text-gray-700 ">
@@ -56,8 +56,7 @@
                         </div>
                     </div> -->
                     <div class="rounded-b flex flex-col px-4 py-4">
-                        <livewire:dash.alumni-index.table wire:model="selectedYear"/>
-                     
+                        <livewire:dash.alumni-index.table/>
                     </div>
                 </div>
             </div>

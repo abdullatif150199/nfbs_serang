@@ -1,10 +1,22 @@
 
 <div>
     @if(!empty($this->selectedYear))
-    <div class="flex items-center justify-center text-center px-4 py-4 w-full border-b mb-3">
-            <div class="text-md font-medium uppercase text-gray-700 ">
-           Daftar Sebaran Alumni Angkatan {{ implode(', ', $this->selectedYear) }}
-            </div>
+    <div class="px-4 py-4 mt-5 w-full mb-3">
+        <div>
+            <p><b>Sebaran Kampus Angkatan {{ implode(', ', $this->selectedYear) }}</b></p>
+        </div>
+        <div class="px-5">
+            <ul style="list-style-type: disc;">
+                @foreach($this->kampusList as $kampus => $jumlah)
+                    <li><small>{{$kampus}} : {{$jumlah}} Orang</small></li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+        <div class="flex items-center justify-center text-center px-4 py-4 w-full border shadow">
+                <div class="text-md font-medium uppercase text-gray-700 ">
+            Daftar Sebaran Alumni Angkatan {{ implode(', ', $this->selectedYear) }}
+        </div>
     </div>
     @endif
     <div
@@ -19,7 +31,7 @@
                 wire:poll="{{ $refresh }}"
             @endif
         @endif
-    >
+    class="{{!empty($this->selectedYear) ? 'border p-3 shadow' : ' '}}">
         @include('livewire-tables::includes.debug')
         @include('livewire-tables::tailwind.includes.offline')
 
@@ -49,18 +61,7 @@
     </div>
 
     @if(!empty($this->kampusList))
-        <div class="px-4 py-4 mt-5 w-full mb-3">
-            <div>
-                <p><b>Sebaran Kampus Angkatan {{ implode(', ', $this->selectedYear) }}</b></p>
-            </div>
-            <div class="px-5">
-                <ul style="list-style-type: disc;"  >
-                    @foreach($this->kampusList as $kampus => $jumlah)
-                        <li><small>{{$kampus}} : {{$jumlah}} Orang</small></li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
+      
     @endif
 
 

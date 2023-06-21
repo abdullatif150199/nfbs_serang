@@ -53,10 +53,10 @@
             <div>
                 <p><b>Sebaran Kampus Angkatan {{ implode(', ', $this->selectedYear) }}</b></p>
             </div>
-            <div >
-                <ul style="list-style-type: disc;" class="ml-4" >
-                    @foreach($this->kampusList as $item)
-                        <li><small>{{$item->nama_kampus}} : {{$item->total}} Orang</small></li>
+            <div class="px-5">
+                <ul style="list-style-type: disc;"  >
+                    @foreach($this->kampusList as $kampus => $jumlah)
+                        <li><small>{{$kampus}} : {{$jumlah}} Orang</small></li>
                     @endforeach
                 </ul>
             </div>

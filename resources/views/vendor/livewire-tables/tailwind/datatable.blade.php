@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    @if(!empty($this->selectedYear))
+    @if(!empty($this->kampusList))
         <div class="px-4 py-4 mt-5 w-full mb-3">
             <div>
                 <p><b>Sebaran Kampus Angkatan {{ implode(', ', $this->selectedYear) }}</b></p>

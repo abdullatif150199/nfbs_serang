@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AlumniController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/{slug}', function () {
     return response()->json('Not found', 404);
+});
+
+Route::get('/update',function () {
+    return response()->json('halaman update');
 });

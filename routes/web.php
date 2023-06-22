@@ -66,4 +66,4 @@ Route::domain('rekrutmen.' . config('app.domain'))
     });
 
 
-    Route::get('/update-tahun-lulus', [AlumniController::class, 'updateTahunLulus'])->name('update.tahun');
+Route::get('/update-tahun-lulus', [AlumniController::class, 'updateTahunLulus'])->name('update.tahun');

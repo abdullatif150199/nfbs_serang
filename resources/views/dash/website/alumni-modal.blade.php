@@ -72,20 +72,21 @@
 
 <script>
     function updateTahunLulus(tahun) {
-        axios.get('/update-tahun-lulus', {
-            params: {
-                tahun: tahun
+        fetch('/update')
+            .then(function (response) {
+            if (!response.ok) {
+                throw new Error('Error: ' + response.status);
             }
-        })
-        .then(function (response) {
-            console.log(response.data);
-            
-            var tahunLulus = response.data;
-            
-        })
-        .catch(function (error) {
+            return response.json();
+            })
+            .then(function (data) {
+            console.log(data);
+            var tahunLulus = data;
+            // Lanjutkan dengan logika lainnya
+            })
+            .catch(function (error) {
             console.log(error);
-        });
+            });
     }
 </script>
 

@@ -13,8 +13,9 @@ class AlumniController extends Controller
 
     public function updateTahunLulus(Request $request)
     {
-        $tahun = $request->input('tahun');
-        $namaKampus = Alumni::where('tahun_lulus', $tahun)->distinct()->pluck('nama_kampus')->toArray();
+        // $tahun = $request->input('tahun_lulus');
+        return ' ini halaman update';
+        $namaKampus = Alumni::distinct()->pluck('nama_kampus')->toArray();
         return response()->json($namaKampus);
     }
 }

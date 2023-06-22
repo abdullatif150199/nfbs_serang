@@ -1,9 +1,9 @@
 
 <div>
     @if(!empty($this->selectedYear))
-    <div class="px-4 py-4 mt-5 w-full mb-3">
+    <div class="w-full mb-4">
         <div>
-            <p><b>Sebaran Kampus Angkatan {{ implode(', ', $this->selectedYear) }}</b></p>
+            <p><b>SEBARAN KAMPUS ANGKATAN LULUS TAHUN {{ implode(', ', $this->selectedYear) }}</b></p>
         </div>
         <div class="px-5">
             <ul style="list-style-type: disc;">
@@ -13,9 +13,9 @@
             </ul>
         </div>
     </div>
-        <div class="flex items-center justify-center text-center px-4 py-4 w-full border shadow">
-                <div class="text-md font-medium uppercase text-gray-700 ">
-            Daftar Sebaran Alumni Angkatan {{ implode(', ', $this->selectedYear) }}
+    <div class="flex items-center justify-center text-center px-4 py-4 w-full border ">
+        <div class="text-md font-medium uppercase text-gray-700 ">
+            Daftar Sebaran Alumni Angkatan Lulus Tahun {{ implode(', ', $this->selectedYear) }}
         </div>
     </div>
     @endif
@@ -31,7 +31,7 @@
                 wire:poll="{{ $refresh }}"
             @endif
         @endif
-    class="{{!empty($this->selectedYear) ? 'border p-3 shadow' : ' '}}">
+    class="{{!empty($this->selectedYear) ? 'border p-3' : ' '}}">
         @include('livewire-tables::includes.debug')
         @include('livewire-tables::tailwind.includes.offline')
 
@@ -59,12 +59,6 @@
             </div>
         </div>
     </div>
-
-    @if(!empty($this->kampusList))
-      
-    @endif
-
-
 
     @isset($modalsView)
         @include($modalsView)

@@ -115,8 +115,8 @@ class WebsiteController extends Controller
         // dd($request);
         // $tahun = $request->input('tahun');
         // dd($tahun);
-        $nama_kampus = $request->nama_kampus;
         $tahun_lulus = $request->tahun_lulus;
+        $nama_kampus = $request->nama_kampus;
         $letak_kampus = $request->letak_kampus;
         $jenis_kampus = $request->jenis_kampus;
        
@@ -137,7 +137,8 @@ class WebsiteController extends Controller
         }
         
         $items = $query->get();
-        return Excel::download(new AlumniExport($items), 'DataAlumni.xlsx');
+        return Excel::download(new AlumniExport($items), 'Data Alumni Angkatan ' . $tahun_lulus . '_' . $nama_kampus . '_' .$letak_kampus . '_' .$jenis_kampus . '.xlsx');
+
     }
     
 

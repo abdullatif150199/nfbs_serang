@@ -6,7 +6,7 @@
         <h1 class="pt-16 text-xl font-semibold tracking-tight text-gray-900 md:text-3xl text-center">Sebaran Alumni</h1>
    </div>
 
-    <div class="relative py-8 md:py-16 overflow-hidden justify-center items-center mt-24 grid bg-white">
+    <div class="relative pt-8 md:py-16 overflow-hidden justify-center items-center mt-24 grid bg-white">
         <div class="text-center text-3xl">
             <img class="w-full rounded-lg" src="storage/alumni/alumni.jpg" alt="Sebaran Alumni">
         </div>

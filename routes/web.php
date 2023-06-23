@@ -43,12 +43,15 @@ Route::name('dash.')
         Route::post('/{item}/export', [WebsiteController::class, 'export'])->name('export');
     });
 
+
+
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('/faq', [PostController::class, 'faq'])->name('faq');
 // Route::get('/videos', [PostController::class, 'videos'])->name('post.videos');
 // Route::get('/fasilitas', [PostController::class, 'facilities'])->name('post.facilities');
 Route::get('/artikel', [PostController::class, 'articles'])->name('post.articles');
 Route::get('/alumni', [AlumniController::class, 'index'])->name('alumni');
+Route::get('/updateKampus', [AlumniController::class, 'updateNamaKampus'])->name('update.kampus');
 
 Route::get('/{slug}', [PostController::class, 'show'])->name('post.show');
 Route::get('/program/{program}', [PostController::class, 'program'])->name('post.program');
@@ -66,4 +69,4 @@ Route::domain('rekrutmen.' . config('app.domain'))
     });
 
 
-Route::get('/update-tahun-lulus', [AlumniController::class, 'updateTahunLulus'])->name('update.tahun');
+

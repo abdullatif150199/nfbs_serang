@@ -20,9 +20,6 @@ class AlumniSeeder extends Seeder
         $faker = Faker::create();
 
            $jumlahAlumni = 150;
-
-        
-
             $namaKampus = ['ITB', 'UGM', 'UNTIRTA', 'UNPAD', 'UI', 'TELKOM UNIVERSTY', 'BINUS'];
 
             for ($i = 0; $i < $jumlahAlumni; $i++) {
@@ -30,9 +27,8 @@ class AlumniSeeder extends Seeder
                     'nama' => $faker->name,
                     'jurusan' => $faker->randomElement(['Teknik Informatika', 'Akuntansi', 'Hukum']),
                     'nama_kampus' => Arr::random($namaKampus),
-                    'letak_kampus' => $faker->randomElement(['Luar Negeri', 'Dalam Negeri']),
                     'jenis_kampus' => $faker->randomElement(['Negeri', 'Swasta']),
-                    'tahun_lulus' => $faker->randomElement(['2020', '2021', '2022']),
+                    'tahun_lulus' => $faker->randomElement(['2020', '2021', '2022', '2018']),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);

@@ -14,6 +14,7 @@ class Table extends  DataTableComponent
 {
     public $tahunLulus;
     public $columnSize;
+    public $sebaranKampus;
     public $title;
     public $selectedYear = [];
     public $kampusList = [];
@@ -31,6 +32,20 @@ class Table extends  DataTableComponent
         ->get()
         ->pluck('total', 'nama_kampus')
         ->toArray();
+        
+        $sebaranKampus = Alumni::whereIn('tahun_lulus', $this->selectedYear)
+        ->groupBy('nama_kampus')
+        ->select('nama_kampus', \DB::raw('count(*) as total'))
+        ->get()
+        ->pluck('total', 'nama_kampus')
+        ->toArray();
+
+        foreach($sebaranKampus as $kampus => $jumlah) {
+            $data['label'][] = $kampus;
+            $data['data'][] = $jumlah;
+        }
+        $this->sebaranKampus = json_encode($data); 
+        // dd($this->sebaranKampus);  
     }
 
 

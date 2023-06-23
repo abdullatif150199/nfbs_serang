@@ -1,11 +1,11 @@
 
 <div>
     @if(!empty($this->selectedYear))
-    <div class="w-full mb-4">
+    <div class="w-full mb-4 text-center">
         <div>
             <p><b>SEBARAN KAMPUS ANGKATAN LULUS TAHUN {{ implode(', ', $this->selectedYear) }}</b></p>
         </div>
-        <div class="px-5">
+        <div class="px-5 flex justify-center">
             <ul style="list-style-type: disc;">
                 @foreach($this->kampusList as $kampus => $jumlah)
                     <li><small>{{$kampus}} : {{$jumlah}} Orang</small></li>
@@ -13,11 +13,15 @@
             </ul>
         </div>
     </div>
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
     <div class="flex items-center justify-center text-center px-4 py-4 w-full border ">
         <div class="text-md font-medium uppercase text-gray-700 ">
             Daftar Sebaran Alumni Angkatan Lulus Tahun {{ implode(', ', $this->selectedYear) }}
         </div>
     </div>
+    
     @endif
     <div
         @if (is_numeric($refresh))
@@ -65,4 +69,32 @@
     @endisset
 </div>
 
+@if(!empty($this->selectedYear))
+    
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var chartData = JSON.parse('<?php echo $sebaranKampus ?>');
+        console.log(chartData);
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+        labels: chartData.label,
+        datasets: [{
+            label: '# of Votes',
+            data: chartData.data,
+            borderWidth: 1
+        }]
+        },
+        options: {
+        scales: {
+            y: {
+            beginAtZero: true
+            }
+        }
+        }
+    });
+    </script>
+@endif
 

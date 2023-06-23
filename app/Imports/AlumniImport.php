@@ -18,9 +18,8 @@ class AlumniImport implements ToModel
                 'nama' => $row[1],
                 'jurusan' => $row[2],
                 'nama_kampus' => $row[3],
-                'letak_kampus' => $row[4],
-                'jenis_kampus' => $row[5],
-                'tahun_lulus' => $row[6],
+                'jenis_kampus' => $row[4],
+                'tahun_lulus' => $row[5],
         ]);
     }
 }

@@ -26,9 +26,8 @@ class AlumniExport implements FromCollection, WithHeadings
             'NAMA',
             'JURUSAN',
             'NAMA KAMPUS',
+            'JENIS KAMPUS',
             'TAHUN LULUS',
-            'LETAK KAMPUS',
-            'JENIS KAMPUS'
         ];
     }
 
@@ -42,9 +41,8 @@ class AlumniExport implements FromCollection, WithHeadings
                     $item->nama,
                     $item->jurusan,
                     $item->nama_kampus,
-                    $item->tahun_lulus,
-                    $item->letak_kampus,
                     $item->jenis_kampus,
+                    $item->tahun_lulus,
                 ];
         }
 

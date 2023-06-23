@@ -44,19 +44,15 @@ class WebsiteController extends Controller
             $init = ['' => 'Semua'];
             $tahunLulus = Alumni::distinct()->pluck('tahun_lulus')->toArray();
             $nama_kampus = Alumni::where('tahun_lulus', $tahunLulus)->distinct()->pluck('nama_kampus')->toArray();
-            $letakKampus = [
-                'Luar Negeri' => 'Luar Negeri', 
-                'Dalam Negeri' => 'Dalam Negeri'];
                 $jenisKampus = [
                     'Negeri' => 'Negeri', 
                     'Swasta' => 'Swasta'];
             $tahunLulus_arr = $init + array_combine($tahunLulus, $tahunLulus);
             $namaKampus_arr = $init + array_combine($nama_kampus, $nama_kampus);
-            $letakKampus_arr = $init + $letakKampus;
+
             $jenisKampus_arr = $init + $jenisKampus;
             return view('dash.website.alumni-index', [
                 'listNamaKampus' => $namaKampus_arr,
-                'listLetakKampus' => $letakKampus_arr,
                 'listJenisKampus' => $jenisKampus_arr,
                 'listTahunLulus' => $tahunLulus_arr
             ]);
@@ -102,13 +98,6 @@ class WebsiteController extends Controller
         return redirect('/dashboard/alumni')->with('success', 'Data Alumni Berhasil Di Import!');
     }
 
-    public function updateTahunLulus(Request $request)
-    {
-        $tahun = $request->input('tahun');
-        dd($tahun);
-        $namaKampus = Alumni::where('tahun_lulus', $tahun)->distinct()->pluck('nama_kampus')->toArray();
-        return response()->json($namaKampus);
-    }
 
     public function export(Request $request) 
     {
@@ -117,7 +106,6 @@ class WebsiteController extends Controller
         // dd($tahun);
         $tahun_lulus = $request->tahun_lulus;
         $nama_kampus = $request->nama_kampus;
-        $letak_kampus = $request->letak_kampus;
         $jenis_kampus = $request->jenis_kampus;
        
                       
@@ -129,15 +117,12 @@ class WebsiteController extends Controller
         if ($nama_kampus && $nama_kampus != ' ') {
             $query->where('nama_kampus', $nama_kampus);
         }
-        if ($letak_kampus && $letak_kampus != ' ') {
-            $query->where('letak_kampus', $letak_kampus);
-        }
         if ($jenis_kampus && $jenis_kampus != ' ') {
             $query->where('jenis_kampus', $jenis_kampus);
         }
         
         $items = $query->get();
-        return Excel::download(new AlumniExport($items), 'Data Alumni Angkatan ' . $tahun_lulus . '_' . $nama_kampus . '_' .$letak_kampus . '_' .$jenis_kampus . '.xlsx');
+        return Excel::download(new AlumniExport($items), 'Data Alumni Angkatan ' . $tahun_lulus . '_' . $nama_kampus . '_' .$jenis_kampus . '.xlsx');
 
     }
     

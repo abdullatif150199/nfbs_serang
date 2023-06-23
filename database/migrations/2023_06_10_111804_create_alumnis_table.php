@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('nama');
             $table->string('jurusan');
             $table->string('nama_kampus');
-            $table->enum('letak_kampus', ['Dalam Negeri', 'Luar Negeri']);
             $table->enum('jenis_kampus', ['Swasta', 'Negeri']);
             $table->string('tahun_lulus');
             $table->timestamps();

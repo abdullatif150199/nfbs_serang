@@ -29,23 +29,15 @@
                 <div class="text-lg font-bold mb-2">Export Data Alumni</div>
                     <div class="mb-4">
                         <label>Tahun Lulus</label>
-                        <select name="tahun_lulus" class='w-full' onchange="updateTahunLulus(this.value)">
-                            @foreach ($listTahunLulus as $key => $val)
-                                <option value="{{ $key }}">{{ $val }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-4">
-                        <label>Letak Kampus</label>
-                        <select name="letak_kampus" class='w-full'>
-                            @foreach ($listLetakKampus as $key => $val)
-                            <option value="{{ $key }}">{{ $val }}</option>
-                            @endforeach
+                        <select name="tahun_lulus" id="tahun_lulus" class='w-full' >
+                        @foreach ($listTahunLulus as $tahun)
+                            <option value="{{ $tahun }}">{{ $tahun }}</option>
+                        @endforeach
                         </select>
                     </div>
                     <div class="mb-4">
                         <label>Jenis Kampus</label>
-                        <select name="jenis_kampus" class='w-full'>
+                        <select name="jenis_kampus" class='w-full' >
                             @foreach ($listJenisKampus as $key => $val)
                             <option value="{{ $key }}">{{ $val }}</option>
                             @endforeach
@@ -53,9 +45,10 @@
                     </div>
                     <div class="mb-4">
                         <label>Nama Kampus</label>
-                        <select name="nama_kampus" class='w-full'>
-                            @foreach ($listNamaKampus as $key => $val)
-                            <option value="{{ $key }}">{{ $val }}</option>
+                        <select name="nama_kampus" class='w-full' id="nama_kampus">
+                                    <option value="">Semua</option> 
+                            @foreach ($listNamaKampus as $key => $nama)
+                                <option value="{{ $key }}">{{ $nama }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -70,24 +63,33 @@
     </div>
 </div>
 
-<script>
-    function updateTahunLulus(tahun) {
-        fetch('/update')
-            .then(function (response) {
-            if (!response.ok) {
-                throw new Error('Error: ' + response.status);
-            }
-            return response.json();
-            })
-            .then(function (data) {
-            console.log(data);
-            var tahunLulus = data;
-            // Lanjutkan dengan logika lainnya
-            })
-            .catch(function (error) {
-            console.log(error);
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var defaultOption = '<option value="">Semua</option>';
+        $('#tahun_lulus').on('change', function() {
+            var tahunLulus = $(this).val();
+            $.ajax({
+                url: '{{ route("update.kampus") }}',
+                method: 'GET',
+                data: {
+                    selectedValue: tahunLulus
+                },
+                success: function(response) {
+                    var options = defaultOption;
+
+                    $.each(response, function(index, value) {
+                        options += '<option value="' + value + '">' + value + '</option>';
+                    });
+
+                    $('#nama_kampus').html(options);
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                }
             });
-    }
+        });
+    });
 </script>
 
 

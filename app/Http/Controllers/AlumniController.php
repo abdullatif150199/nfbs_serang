@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Alumni;
 
 class AlumniController extends Controller
 {
@@ -11,11 +12,13 @@ class AlumniController extends Controller
         return view('alumni.index');
     }
 
-    public function updateTahunLulus(Request $request)
+    public function updateNamaKampus(Request $request)
     {
-        // $tahun = $request->input('tahun_lulus');
-        return ' ini halaman update';
-        $namaKampus = Alumni::distinct()->pluck('nama_kampus')->toArray();
+        // dd($request);
+        $tahunLulus = $request->input('selectedValue');
+        $nama_kampus_arr = [' ' => 'Semua'];
+        $namaKampus = Alumni::where('tahun_lulus', $tahunLulus)->distinct()->pluck('nama_kampus');
+        
         return response()->json($namaKampus);
     }
 }

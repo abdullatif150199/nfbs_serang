@@ -15,12 +15,10 @@ class Form extends Component
     public $jurusan;
     public $nama_kampus;
     public $jenis_kampus;
-    public $letak_kampus;
     public $tahun_lulus;
     public $image;
     public $published_at;
     public $listJenisKampus;
-    public $listLetakKampus;
     public $listTahunLulus;
   
 
@@ -33,7 +31,6 @@ class Form extends Component
             $this->jurusan = $this->alumni->jurusan;
             $this->nama_kampus = $this->alumni->nama_kampus;
             $this->jenis_kampus = $this->alumni->jenis_kampus;
-            $this->letak_kampus = $this->alumni->letak_kampus;
             $this->tahun_lulus = $this->alumni->tahun_lulus;
             $this->image = $this->alumni->image;
         }
@@ -41,10 +38,6 @@ class Form extends Component
         $this->listJenisKampus = [
             'Swasta' => 'Swasta',
             'Negeri' => 'Negeri'];
-        $this->listLetakKampus = [
-            'Dalam Negeri' => 'Dalam Negeri',
-            'Luar Negeri' => 'Luar Negeri'
-        ];
         $this->listTahunLulus = array_combine(range(2000, 2050), range(2000, 2050));
 
     }
@@ -61,7 +54,6 @@ class Form extends Component
             'nama' => 'required|max:225',
             'jurusan' => 'required|max:225',
             'nama_kampus' => 'required|max:225',
-            'letak_kampus' => 'required|max:225',
             'jenis_kampus' => 'required|max:225',
             'tahun_lulus' => 'required|max:225'
         ]);
@@ -73,7 +65,6 @@ class Form extends Component
             $alumni->nama = $validatedData['nama'];
             $alumni->jurusan = $validatedData['jurusan'];
             $alumni->nama_kampus = $validatedData['nama_kampus'];
-            $alumni->letak_kampus = $validatedData['letak_kampus'];
             $alumni->jenis_kampus = $validatedData['jenis_kampus'];
             $alumni->tahun_lulus = $validatedData['tahun_lulus'];
             $alumni->save();

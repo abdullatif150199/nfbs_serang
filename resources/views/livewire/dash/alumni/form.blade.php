@@ -7,7 +7,6 @@
                     <x-input label="Jurusan" name="jurusan" livewire />
                     <x-input label="Nama Kampus" name="nama_kampus" livewire />
                     <x-select label="Jenis Kampus" name="jenis_kampus" :list="$listJenisKampus" livewire />
-                    <x-select label="Letak Kampus" name="letak_kampus" :list="$listLetakKampus" livewire />
                     <x-select label="Tahun Lulus" name="tahun_lulus" :list="$listTahunLulus" livewire />
                 </div>
             </div>

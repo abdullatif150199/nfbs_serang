@@ -26,26 +26,31 @@ class Table extends  DataTableComponent
         $this->selectedYear = [Alumni::max('tahun_lulus')];
         $this->namaKampus = Alumni::whereIn('tahun_lulus', $this->selectedYear)->distinct()->pluck('nama_kampus')->toArray();
         $this->columnSize = request()->is('alumni*') ? 'px-2 py-1 md:px-4 md:py-2' : 'px-3 py-2 md:px-6 md:py-4';
+        $this->updateKampus(); 
+    }
+
+    public function updateKampus () 
+    {
         $this->kampusList = Alumni::whereIn('tahun_lulus', $this->selectedYear)
         ->groupBy('nama_kampus')
         ->select('nama_kampus', \DB::raw('count(*) as total'))
         ->get()
+        ->sortByDesc('total')
         ->pluck('total', 'nama_kampus')
         ->toArray();
-        
-        $sebaranKampus = Alumni::whereIn('tahun_lulus', $this->selectedYear)
+        $this->sebaranKampus = Alumni::whereIn('tahun_lulus', $this->selectedYear)
         ->groupBy('nama_kampus')
         ->select('nama_kampus', \DB::raw('count(*) as total'))
         ->get()
+        ->sortByDesc('total')
+        ->take(10)
         ->pluck('total', 'nama_kampus')
         ->toArray();
-
-        foreach($sebaranKampus as $kampus => $jumlah) {
+        foreach($this->sebaranKampus as $kampus => $jumlah) {
             $data['label'][] = $kampus;
             $data['data'][] = $jumlah;
         }
         $this->sebaranKampus = json_encode($data); 
-        // dd($this->sebaranKampus);  
     }
 
 
@@ -59,7 +64,6 @@ class Table extends  DataTableComponent
         } else {
             $this->namaKampus = Alumni::distinct()->pluck('nama_kampus')->toArray();
         }
-
         $this->resetSelectedYear();
         $this->resetNamaKampus();
     }
@@ -68,13 +72,13 @@ class Table extends  DataTableComponent
     public function resetSelectedYear()
     {
         $this->selectedYear = [$this->tahunLulus];
-        $this->kampusList = Alumni::whereIn('tahun_lulus', $this->selectedYear)
-        ->groupBy('nama_kampus')
-        ->select('nama_kampus', \DB::raw('count(*) as total'))
-        ->get()
-        ->pluck('total', 'nama_kampus')
-        ->toArray();
-    
+        $this->updateKampus();
+         $this->emitChartUpdate();
+    }
+
+    public function emitChartUpdate()
+    {
+        $this->emit('chartUpdate', $this->sebaranKampus);
     }
 
     public function resetNamaKampus()
@@ -107,8 +111,6 @@ class Table extends  DataTableComponent
         ];
         return $columns;
     }
-
-
 
     public function filters(): array
     {

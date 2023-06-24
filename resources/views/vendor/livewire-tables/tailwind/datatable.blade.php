@@ -1,11 +1,11 @@
-
 <div>
     @if(!empty($this->selectedYear))
-    <div class="w-full mb-4 text-center">
-        <div>
+    <div class="w-full mb-4 ">
+        <div class="text-center">
             <p><b>SEBARAN KAMPUS ANGKATAN LULUS TAHUN {{ implode(', ', $this->selectedYear) }}</b></p>
         </div>
-        <div class="px-5 flex justify-center">
+            <canvas id="myChart" class="sm:w-80p"></canvas>
+        <div class=" px-5 flex justify-center text-center">
             <ul style="list-style-type: disc;">
                 @foreach($this->kampusList as $kampus => $jumlah)
                     <li><small>{{$kampus}} : {{$jumlah}} Orang</small></li>
@@ -13,10 +13,8 @@
             </ul>
         </div>
     </div>
-    <div>
-        <canvas id="myChart"></canvas>
-    </div>
-    <div class="flex items-center justify-center text-center px-4 py-4 w-full border ">
+    
+    <div class="flex mt-10 items-center justify-center text-center px-4 py-4 w-full border ">
         <div class="text-md font-medium uppercase text-gray-700 ">
             Daftar Sebaran Alumni Angkatan Lulus Tahun {{ implode(', ', $this->selectedYear) }}
         </div>
@@ -69,32 +67,43 @@
     @endisset
 </div>
 
+
+
 @if(!empty($this->selectedYear))
-    
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        var chartData = JSON.parse('<?php echo $sebaranKampus ?>');
-        console.log(chartData);
-    const ctx = document.getElementById('myChart');
+    @push('script')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+        <script>
+                var chartData = {!! $sebaranKampus !!};
+                const ctx = document.getElementById('myChart');
+               const myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                labels: chartData.label,
+                datasets: [{
+                    label: 'Sebaran Kampus',
+                    data: chartData.data,
+                    borderWidth: 1
+                }]
+                },
+                options: {
+                scales: {
+                    y: {
+                    beginAtZero: true
+                    }
+                }
+                }
+            });
 
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-        labels: chartData.label,
-        datasets: [{
-            label: '# of Votes',
-            data: chartData.data,
-            borderWidth: 1
-        }]
-        },
-        options: {
-        scales: {
-            y: {
-            beginAtZero: true
-            }
-        }
-        }
-    });
-    </script>
+            Livewire.on('chartUpdate', data => {
+            var updatedData = JSON.parse(data);
+            chartData = updatedData;
+            myChart.data.labels = chartData.label;
+            myChart.data.datasets.forEach((dataset) => {
+                dataset.data = chartData.data;
+            });
+            myChart .update();
+        });
+        </script>
+    @endpush
 @endif
-
+  

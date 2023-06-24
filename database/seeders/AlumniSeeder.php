@@ -20,7 +20,7 @@ class AlumniSeeder extends Seeder
         $faker = Faker::create();
 
            $jumlahAlumni = 150;
-            $namaKampus = ['ITB', 'UGM', 'UNTIRTA', 'UNPAD', 'UI', 'TELKOM UNIVERSTY', 'BINUS'];
+            $namaKampus = ['UNRAM', 'UNAIR', 'UNPAS', 'UNPAD', 'UNW', 'UNU', 'UMM'];
 
             for ($i = 0; $i < $jumlahAlumni; $i++) {
                 DB::table('alumnis')->insert([

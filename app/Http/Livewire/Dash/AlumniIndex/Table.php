@@ -19,6 +19,7 @@ class Table extends  DataTableComponent
     public $selectedYear = [];
     public $kampusList = [];
     public $namaKampus = [];
+    public array $perPageAccepted = [500];
 
     public function mount()
     {

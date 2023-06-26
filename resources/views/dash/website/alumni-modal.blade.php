@@ -28,7 +28,7 @@
             <div class="p-4">
                 <div class="text-lg font-bold mb-2">Export Data Alumni</div>
                     <div class="mb-4">
-                        <label>Tahun Lulus</label>
+                        <label>Angkatan</label>
                         <select name="tahun_lulus" id="tahun_lulus" class='w-full' >
                         @foreach ($listTahunLulus as $tahun)
                             <option value="{{ $tahun }}">{{ $tahun }}</option>

@@ -4,7 +4,7 @@
         <div class="text-center">
             <p><b>SEBARAN KAMPUS ANGKATAN LULUS TAHUN {{ implode(', ', $this->selectedYear) }}</b></p>
         </div>
-            <canvas id="myChart" class="sm:w-80p"></canvas>
+            <canvas id="myChart" class="sm:w-70p"></canvas>
         <div class=" px-5 flex justify-center text-center">
             <ul style="list-style-type: disc;">
                 @foreach($this->kampusList as $kampus => $jumlah)
@@ -80,7 +80,7 @@
                 data: {
                 labels: chartData.label,
                 datasets: [{
-                    label: 'Sebaran Kampus',
+                    label: 'Sebaran 10 Terbanyak',
                     data: chartData.data,
                     borderWidth: 1
                 }]

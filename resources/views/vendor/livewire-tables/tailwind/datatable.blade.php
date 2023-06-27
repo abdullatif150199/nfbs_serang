@@ -6,7 +6,7 @@
         </div>
             <canvas id="myChart" class="sm:w-70p"></canvas>
         <div class=" px-5 flex justify-center text-center">
-            <ul style="list-style-type: disc;">
+            <ul style="list-style-type: decimal;" >
                 @foreach($this->kampusList as $kampus => $jumlah)
                     <li><small>{{$kampus}} : {{$jumlah}} Orang</small></li>
                 @endforeach
@@ -73,10 +73,11 @@
     @push('script')
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
         <script>
+            
                 var chartData = {!! $sebaranKampus !!};
                 const ctx = document.getElementById('myChart');
                const myChart = new Chart(ctx, {
-                type: 'line',
+                type: 'bar',
                 data: {
                 labels: chartData.label,
                 datasets: [{

@@ -11,13 +11,18 @@ class Alumni extends Model
     
     protected $guarded = ['id'];
 
-    public function setNamaKampusAttribute($value)
+    public function setNamaAttribute($value)
     {
-        $this->attributes['nama_kampus'] = strtoupper($value);
+        $this->attributes['nama'] = strtoupper($value);
     }
 
     public function setJurusanAttribute($value)
     {
-        $this->attributes['jurusan'] = ucwords($value);
+        $this->attributes['jurusan'] = strtoupper($value);
+    }
+
+    public function setNamaKampusAttribute($value)
+    {
+        $this->attributes['nama_kampus'] = strtoupper($value);
     }
 }

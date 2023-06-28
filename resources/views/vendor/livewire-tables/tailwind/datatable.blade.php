@@ -1,15 +1,15 @@
 <div>
     @if(!empty($this->selectedYear))
-    <div class="w-full mb-4 ">
+    <div class="w-full mb-4">
         <div class="text-center">
             <p><b>SEBARAN KAMPUS ANGKATAN LULUS TAHUN {{ implode(', ', $this->selectedYear) }}</b></p>
         </div>
-            <canvas id="myChart" class="sm:w-70p"></canvas>
+            <canvas id="myChart"></canvas>
         <div class=" px-5 flex justify-center text-center">
             <ul style="list-style-type: decimal;" >
-                @foreach($this->kampusList as $kampus => $jumlah)
-                    <li><small>{{$kampus}} : {{$jumlah}} Orang</small></li>
-                @endforeach
+            @foreach(array_slice($this->kampusList, 0, 10) as $kampus => $jumlah)
+                <li><small>{{$kampus}} : {{$jumlah}} Orang</small></li>
+            @endforeach
             </ul>
         </div>
     </div>

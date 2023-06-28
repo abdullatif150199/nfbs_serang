@@ -16,10 +16,11 @@ class Table extends  DataTableComponent
     public $columnSize;
     public $sebaranKampus;
     public $title;
+    public $chartData;
     public $selectedYear = [];
     public $kampusList = [];
     public $namaKampus = [];
-    public array $perPageAccepted = [500];
+    public array $perPageAccepted = [50];
 
     public function mount()
     {
@@ -32,6 +33,8 @@ class Table extends  DataTableComponent
 
     public function updateKampus () 
     {
+       
+
         $this->kampusList = Alumni::whereIn('tahun_lulus', $this->selectedYear)
         ->groupBy('nama_kampus')
         ->select('nama_kampus', \DB::raw('count(*) as total'))
@@ -51,7 +54,11 @@ class Table extends  DataTableComponent
             $data['label'][] = $kampus;
             $data['data'][] = $jumlah;
         }
-        $this->sebaranKampus = json_encode($data); 
+        $this->sebaranKampus = json_encode($data);
+
+        // if (!empty($this->kampusList) && !empty($this->sebaranKampus)) {
+        //     return; 
+        // }
     }
 
 
@@ -94,20 +101,20 @@ class Table extends  DataTableComponent
                 ->sortable()
                 ->searchable()
                 ->format(function ($value, $column, $row) {
-                    return $row->nama;
-                })->asHtml(),
+                    return '<small>'.$row->nama.'</small>'; 
+                })->asHtml()->addClass('w-40'),
             Column::make('jurusan', 'jurusan')
                 ->searchable()
                 ->sortable()
                 ->format(function ($value, $column, $row) {
-                    return $row->jurusan;
-                })->asHtml(),
+                    return '<small>'.$row->jurusan.'</small>'; 
+                })->asHtml()->addClass('w-40'),
             Column::make('nama kampus', 'nama_kampus')
                 ->searchable()
                 ->sortable()
                 ->format(function ($value, $column, $row) {
-                    return $row->nama_kampus;
-                })->asHtml()
+                    return '<small>'.$row->nama_kampus.'</small>'; 
+                })->asHtml()->addClass('w-40')
            
         ];
         return $columns;

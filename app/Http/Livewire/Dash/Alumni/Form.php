@@ -54,7 +54,6 @@ class Form extends Component
             'nama' => 'required|max:225',
             'jurusan' => 'required|max:225',
             'nama_kampus' => 'required|max:225',
-            'jenis_kampus' => 'required|max:225',
             'tahun_lulus' => 'required|max:225'
         ]);
 
@@ -65,7 +64,9 @@ class Form extends Component
             $alumni->nama = $validatedData['nama'];
             $alumni->jurusan = $validatedData['jurusan'];
             $alumni->nama_kampus = $validatedData['nama_kampus'];
-            $alumni->jenis_kampus = $validatedData['jenis_kampus'];
+            if(!empty($alumni->jenis_kampus)) {
+                $alumni->jenis_kampus = $validatedData['jenis_kampus'];
+            }
             $alumni->tahun_lulus = $validatedData['tahun_lulus'];
             $alumni->save();
         } else {

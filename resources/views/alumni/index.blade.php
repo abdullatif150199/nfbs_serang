@@ -7,9 +7,7 @@
    </div>
 
     <div class="relative pt-8 md:py-16 overflow-hidden justify-center items-center mt-24 grid bg-white">
-        <div class="text-center text-3xl">
-            <img class="w-full rounded-lg" src="storage/alumni/alumni.jpg" alt="Sebaran Alumni">
-        </div>
+        
         <div class="hidden lg:block lg:absolute lg:inset-y-0 lg:h-full lg:w-full">
             <div class="relative h-full text-lg max-w-prose mx-auto" aria-hidden="true">
                 <svg class="absolute top-12 left-full transform translate-x-32" width="404" height="384" fill="none"
@@ -47,17 +45,15 @@
                 </svg>
             </div>
         </div>
-        <div class="row my-10 z-10">
+        <div class="row my-10 z-10  flex justify-center">
             <div class="mx-4 my-10 bg-white sm:-mx-6 md:mx-0 md:rounded-lg">
+                <div class="text-center text-3xl">
+                    <img class="w-full rounded-lg" src="storage/alumni/alumni.jpg" alt="Sebaran Alumni">
+                </div>
                 <div class="divide-y">
-                    <!-- <div class="flex items-center justify-center text-center px-4 py-4 w-full">
-                        <div class="text-md font-small uppercase text-gray-700 ">
-                           Daftar Sebaran Alumni Angkatan 2022
-                        </div>
-                    </div> -->
-                    <div class="rounded-b flex flex-col px-4 py-4">
+                    <div class="rounded-b px-4 py-4">
                         <livewire:dash.alumni-index.table/>
-                    </div>
+                    </div>    
                 </div>
             </div>
         </div>
@@ -72,7 +68,6 @@
 @push('script')
     {{-- Disqus Api's --}}
     <script>
- 
         (function() { // DON'T EDIT BELOW THIS LINE
             var d = document,
                 s = d.createElement('script');
